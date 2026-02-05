@@ -1,0 +1,711 @@
+{
+  "module": "navigation-system",
+  "version": "1.0",
+  "status": "draft",
+  "created": "2026-02-05",
+  "owner": "Senior Product Manager",
+
+  "overview": {
+    "name": "PMM Navigation System",
+    "description": "Core application navigation and wayfinding interface providing access to all PMM modules with persistent sidebar, responsive mobile support, notifications, and user profile access",
+    "problemStatement": "Users need efficient navigation between multiple complex manufacturing modules without cognitive overhead, clear awareness of critical alerts, and consistent wayfinding across devices",
+    "targetUsers": [
+      "Manufacturing Engineer",
+      "Production Planner",
+      "Cost Accountant",
+      "Inventory Manager",
+      "Operations Manager",
+      "Warehouse Staff",
+      "Finance Manager",
+      "System Administrator"
+    ],
+    "businessValue": {
+      "riskReduction": [
+        "Reduced navigation errors through clear active state indicators",
+        "Faster incident response via alert badge visibility",
+        "Audit compliance through navigation history tracking"
+      ],
+      "operationalEfficiency": [
+        "Time savings: 7.5-30 minutes per user per day from faster module switching",
+        "Reduced training time: From 2 weeks to 1 week onboarding",
+        "Cognitive load reduction: Persistent navigation eliminates confusion"
+      ],
+      "scalability": [
+        "Future module support without redesign",
+        "Multi-site operations scaling",
+        "Role-based access foundation"
+      ],
+      "userExperience": [
+        "Increased feature adoption: 40% improvement in Reportes/Configuración discovery",
+        "User satisfaction correlation with perceived system quality",
+        "Accessibility compliance expands user base"
+      ]
+    }
+  },
+
+  "successMetrics": [
+    {
+      "category": "Efficiency",
+      "metric": "Average time to navigate to target module",
+      "target": "< 3 seconds",
+      "measurement": "Analytics tracking (click to page load)"
+    },
+    {
+      "category": "Efficiency",
+      "metric": "Navigation-related support tickets",
+      "target": "Reduce by 60%",
+      "measurement": "Support ticket analysis (baseline vs 3 months post-launch)"
+    },
+    {
+      "category": "Adoption",
+      "metric": "% of users accessing Reportes module weekly",
+      "target": "Increase from 25% to 50%",
+      "measurement": "User activity logs"
+    },
+    {
+      "category": "Adoption",
+      "metric": "% of users accessing Configuración monthly",
+      "target": "Increase from 15% to 35%",
+      "measurement": "User activity logs"
+    },
+    {
+      "category": "Accuracy",
+      "metric": "Navigation errors (clicking wrong module)",
+      "target": "< 2% of navigation events",
+      "measurement": "Error tracking / undo patterns"
+    },
+    {
+      "category": "Alert Response",
+      "metric": "Time from alert creation to user acknowledgment",
+      "target": "Reduce by 40%",
+      "measurement": "Alert timestamp analysis"
+    },
+    {
+      "category": "Accessibility",
+      "metric": "Keyboard-only navigation success rate",
+      "target": "100%",
+      "measurement": "Accessibility audit"
+    },
+    {
+      "category": "Accessibility",
+      "metric": "Screen reader compatibility score",
+      "target": "WCAG 2.1 AA compliance",
+      "measurement": "Accessibility testing tools"
+    },
+    {
+      "category": "User Satisfaction",
+      "metric": "Navigation ease rating (1-5 scale)",
+      "target": "≥ 4.2",
+      "measurement": "Quarterly user survey"
+    },
+    {
+      "category": "Performance",
+      "metric": "Navigation interaction response time",
+      "target": "< 100ms",
+      "measurement": "Frontend performance monitoring"
+    }
+  ],
+
+  "userStories": [
+    {
+      "id": "US-NAV-001",
+      "title": "Primary Module Navigation",
+      "persona": "Manufacturing Engineer",
+      "story": "As a Manufacturing Engineer, I want to navigate to any major PMM module (Dashboard, Inventario, Categorías, Alertas, Reportes, Configuración) with a single click, so that I can access the features I need immediately without searching through nested menus",
+      "priority": "Critical",
+      "userImpact": "High",
+      "acceptanceCriteria": [
+        "Left sidebar displays all six primary navigation items with icons and labels",
+        "Each navigation item is clickable and navigates to the corresponding module",
+        "Active module is visually highlighted (orange background)",
+        "Navigation persists across all pages within the application",
+        "Clicking a navigation item loads the target module within 3 seconds",
+        "Clicking the currently active navigation item does not cause page reload (no-op)"
+      ]
+    },
+    {
+      "id": "US-NAV-002",
+      "title": "Visual Active State Indication",
+      "persona": "Inventory Manager",
+      "story": "As an Inventory Manager, I want to see which module I'm currently in at all times, so that I don't accidentally perform actions in the wrong context",
+      "priority": "Critical",
+      "userImpact": "High",
+      "acceptanceCriteria": [
+        "Currently active navigation item displays orange background (#F97316 or similar)",
+        "Active item text remains white for high contrast",
+        "Active item icon is white to match text color",
+        "Inactive items have white text on dark blue background",
+        "Active state updates immediately when navigating to a different module",
+        "Only one navigation item can be active at a time",
+        "Active state is visually distinct and recognizable within 1 second"
+      ]
+    },
+    {
+      "id": "US-NAV-003",
+      "title": "Sidebar Collapse/Expand",
+      "persona": "Warehouse Staff",
+      "story": "As a Warehouse Staff member using a tablet, I want to collapse the navigation sidebar to a compact icon-only view, so that I can maximize screen space for operational data entry while still having quick access to navigation",
+      "priority": "High",
+      "userImpact": "Medium",
+      "acceptanceCriteria": [
+        "Collapse button is visible at the bottom of the sidebar (chevron icon pointing left)",
+        "Clicking collapse button transitions sidebar to icon-only mode (width ~64px)",
+        "In collapsed mode, only module icons are visible (no text labels)",
+        "Hovering over a collapsed menu item shows a tooltip with the module name",
+        "Expand button (chevron pointing right) is visible when sidebar is collapsed",
+        "Clicking expand button restores full sidebar with icons and text",
+        "Collapse/expand state persists across page navigations within the same session",
+        "Transition animation is smooth (200-300ms)",
+        "Logo area adapts in collapsed mode (shows icon only or compact version)"
+      ]
+    },
+    {
+      "id": "US-NAV-004",
+      "title": "Notification Badge",
+      "persona": "Production Planner",
+      "story": "As a Production Planner, I want to see a notification count badge on the top bar, so that I am immediately aware of critical alerts (low stock, production delays) that require my attention",
+      "priority": "Critical",
+      "userImpact": "High",
+      "acceptanceCriteria": [
+        "Notification icon (bell) is visible in the top-right area of the top bar",
+        "Badge displays unread notification count (e.g., '3')",
+        "Badge uses high-visibility color (red #EF4444 or similar)",
+        "Badge is circular and positioned on the top-right of the bell icon",
+        "Clicking the notification icon opens a notification panel or navigates to Alertas module",
+        "Badge count updates in real-time when new notifications arrive (within 10 seconds)",
+        "Badge disappears when notification count is zero",
+        "Badge count displays '9+' for counts greater than 9",
+        "Notification icon is accessible via keyboard (Tab navigation, Enter to activate)"
+      ]
+    },
+    {
+      "id": "US-NAV-005",
+      "title": "User Profile Access",
+      "persona": "System Administrator",
+      "story": "As a System Administrator, I want to access my user profile and account settings from the top bar, so that I can manage my preferences, change password, and log out without navigating away from my current work",
+      "priority": "High",
+      "userImpact": "Medium",
+      "acceptanceCriteria": [
+        "User avatar/profile icon is visible in the top-right corner of the top bar",
+        "Clicking the user icon opens a dropdown menu with options: View Profile, Account Settings, Help & Documentation, Log Out",
+        "Dropdown menu is positioned below the user icon and aligned to the right edge",
+        "User icon displays current user's initials or profile photo",
+        "Profile menu is accessible via keyboard",
+        "Clicking outside the dropdown menu closes it",
+        "Log Out option requires confirmation before signing user out",
+        "Profile icon is distinguishable from notification icon"
+      ]
+    },
+    {
+      "id": "US-NAV-006",
+      "title": "Application Branding & Identity",
+      "persona": "Operations Manager",
+      "story": "As an Operations Manager, I want to see the PMM logo and application name clearly displayed in the navigation, so that I can quickly identify which system I'm working in (especially when managing multiple applications or browser tabs)",
+      "priority": "Medium",
+      "userImpact": "Low",
+      "acceptanceCriteria": [
+        "PMM logo (orange icon with factory/mill graphic) is displayed at the top of the sidebar",
+        "'Pennant Mill Manager' text is displayed below or beside the logo in expanded sidebar mode",
+        "Logo and text use brand colors (orange #F97316 for icon, white text)",
+        "Logo area is clickable and navigates to Dashboard (home page)",
+        "Application name 'Pennant Mill Manager' is also displayed in the top bar for reinforcement",
+        "Logo and branding are visible in both expanded and collapsed sidebar states",
+        "Logo area has adequate padding and visual separation from navigation items"
+      ]
+    },
+    {
+      "id": "US-NAV-007",
+      "title": "Keyboard Navigation",
+      "persona": "Cost Accountant (Power User)",
+      "story": "As a Power User (Cost Accountant), I want to navigate between modules using keyboard shortcuts, so that I can work more efficiently without switching between keyboard and mouse",
+      "priority": "High",
+      "userImpact": "Medium",
+      "acceptanceCriteria": [
+        "Tab key moves focus through navigation items in logical order (top to bottom)",
+        "Enter or Space key activates the focused navigation item",
+        "Focus indicator is clearly visible (outline or highlight on focused item)",
+        "Keyboard shortcuts are available for common modules (Alt+D, Alt+I, etc.)",
+        "Keyboard shortcuts are documented in Help section",
+        "Escape key closes any open dropdown menus (profile, notifications)",
+        "Focus returns to main content area after navigation completes",
+        "Keyboard navigation works in both expanded and collapsed sidebar states"
+      ]
+    },
+    {
+      "id": "US-NAV-008",
+      "title": "Mobile/Tablet Responsive Navigation",
+      "persona": "Warehouse Staff",
+      "story": "As a Warehouse Staff member using a mobile device, I want the navigation to adapt to smaller screens, so that I can access all PMM modules on my phone or tablet while on the warehouse floor",
+      "priority": "High",
+      "userImpact": "High",
+      "acceptanceCriteria": [
+        "On screens < 768px width, sidebar collapses to a hamburger menu icon",
+        "Hamburger menu icon is positioned in the top-left corner of the top bar",
+        "Clicking hamburger menu opens sidebar as an overlay (slides in from left)",
+        "Overlay sidebar displays full navigation items with icons and text",
+        "Clicking outside the overlay or on a navigation item closes the sidebar",
+        "Close button (X) is visible in the top-right of the overlay sidebar",
+        "Sidebar overlay does not block access to top bar (notifications, profile)",
+        "Touch targets for navigation items are minimum 44x44px for accessibility",
+        "Active state indication remains visible in mobile view",
+        "Swipe gesture (left-to-right) can also open the sidebar on touch devices"
+      ]
+    },
+    {
+      "id": "US-NAV-009",
+      "title": "Screen Reader Accessibility",
+      "persona": "Finance Manager (visually impaired)",
+      "story": "As a visually impaired Finance Manager using a screen reader, I want the navigation to be fully accessible with assistive technology, so that I can navigate PMM independently and efficiently",
+      "priority": "High",
+      "userImpact": "High",
+      "acceptanceCriteria": [
+        "All navigation items have descriptive ARIA labels",
+        "Active navigation item is announced as 'current page' or 'selected'",
+        "Sidebar collapse/expand button has clear label",
+        "Notification badge count is announced (e.g., '3 unread notifications')",
+        "Navigation landmark is properly marked with <nav> element and role='navigation'",
+        "Focus order is logical and matches visual layout",
+        "Icon-only elements (in collapsed mode) have text alternatives",
+        "Screen reader announces page title changes when navigating to new module",
+        "Skip navigation link is provided to jump directly to main content",
+        "No keyboard traps exist in navigation interactions"
+      ]
+    },
+    {
+      "id": "US-NAV-010",
+      "title": "Navigation Performance",
+      "persona": "Manufacturing Engineer",
+      "story": "As a Manufacturing Engineer, I want navigation interactions to feel instant and responsive, so that I can work fluidly without frustrating delays when switching between modules",
+      "priority": "High",
+      "userImpact": "High",
+      "acceptanceCriteria": [
+        "Clicking a navigation item provides immediate visual feedback (< 100ms)",
+        "Active state change occurs before page navigation begins",
+        "Sidebar collapse/expand animation completes within 300ms",
+        "Navigation does not block or freeze the UI during page transitions",
+        "Loading indicators are shown if module takes > 1 second to load",
+        "Navigation remains interactive during page loads (no disabled state)",
+        "No visual jank or layout shifts during navigation transitions",
+        "Navigation state (active item, collapsed/expanded) loads within 500ms on page refresh",
+        "Performance is consistent across supported browsers"
+      ]
+    }
+  ],
+
+  "functionalRequirements": [
+    {
+      "id": "REQ-NAV-101",
+      "title": "Sidebar Structure & Layout",
+      "priority": "Critical",
+      "userImpact": "High",
+      "description": "Persistent left sidebar navigation providing access to all six PMM core modules with clear visual hierarchy and consistent structure",
+      "keyFeatures": [
+        "Logo and branding at top",
+        "Six navigation items in fixed order",
+        "Collapse/expand button at bottom",
+        "Active state visual indication",
+        "Fixed sidebar position (does not scroll)"
+      ],
+      "navigationOrder": [
+        "Dashboard",
+        "Inventario",
+        "Categorías",
+        "Alertas",
+        "Reportes",
+        "Configuración"
+      ],
+      "dimensions": {
+        "expandedWidth": "240-256px",
+        "collapsedWidth": "64-72px",
+        "minHeight": "100vh"
+      }
+    },
+    {
+      "id": "REQ-NAV-102",
+      "title": "Active State Management",
+      "priority": "Critical",
+      "userImpact": "High",
+      "description": "Orange highlight indicator showing current module location with automatic state updates on navigation",
+      "keyFeatures": [
+        "Single active state at all times",
+        "Automatic state derivation from current route",
+        "Parent module active for sub-pages",
+        "Immediate visual feedback on navigation",
+        "Persistence across page refreshes"
+      ],
+      "visualSpec": {
+        "activeBackground": "#F97316 (orange)",
+        "activeText": "#FFFFFF (white)",
+        "inactiveBackground": "transparent or #1E3A5F",
+        "inactiveText": "#FFFFFF or #E5E7EB",
+        "borderRadius": "6px"
+      }
+    },
+    {
+      "id": "REQ-NAV-103",
+      "title": "Sidebar Collapse/Expand Functionality",
+      "priority": "High",
+      "userImpact": "Medium",
+      "description": "Toggle between full sidebar (icons + text) and compact sidebar (icons only) to maximize screen space",
+      "keyFeatures": [
+        "Collapse button at bottom of sidebar",
+        "Smooth animation (250ms)",
+        "Icon-only mode in collapsed state",
+        "Tooltips on hover in collapsed mode",
+        "State persistence in localStorage"
+      ],
+      "statePersistence": {
+        "storage": "localStorage",
+        "key": "pmm_sidebar_collapsed",
+        "scope": "user-specific, device-specific"
+      }
+    },
+    {
+      "id": "REQ-NAV-104",
+      "title": "Top Bar - Notification System",
+      "priority": "Critical",
+      "userImpact": "High",
+      "description": "Real-time notification badge showing unread alert count with visual prominence",
+      "keyFeatures": [
+        "Bell icon with badge in top-right area",
+        "Red badge color for visibility",
+        "Count updates within 10 seconds (real-time)",
+        "Badge hidden when count is zero",
+        "'9+' display for counts >= 10"
+      ],
+      "dataSync": {
+        "method": "WebSocket or polling (30-second interval)",
+        "updateLatency": "< 10 seconds",
+        "multiTab": "synchronized across browser tabs"
+      }
+    },
+    {
+      "id": "REQ-NAV-105",
+      "title": "Top Bar - User Profile & Account Access",
+      "priority": "High",
+      "userImpact": "Medium",
+      "description": "User profile icon with dropdown menu for account settings, help, and logout",
+      "keyFeatures": [
+        "User avatar/initials in top-right corner",
+        "Dropdown menu with account options",
+        "Logout confirmation modal",
+        "Profile photo or generated initials display",
+        "Keyboard accessible"
+      ],
+      "menuOptions": [
+        "View Profile",
+        "Account Settings",
+        "Help & Documentation",
+        "Log Out"
+      ]
+    },
+    {
+      "id": "REQ-NAV-106",
+      "title": "Application Title Bar",
+      "priority": "Medium",
+      "userImpact": "Low",
+      "description": "Application name display in top bar for branding and tab identification",
+      "keyFeatures": [
+        "'Pennant Mill Manager' text in top bar",
+        "Dynamic browser tab title with current module",
+        "Responsive text (abbreviated on mobile)"
+      ]
+    },
+    {
+      "id": "REQ-NAV-107",
+      "title": "Navigation Icons",
+      "priority": "High",
+      "userImpact": "Medium",
+      "description": "Distinct, recognizable icons for each module supporting visual scanning and accessibility",
+      "keyFeatures": [
+        "24x24px SVG icons",
+        "Consistent icon library (Heroicons, Lucide, or Phosphor)",
+        "White color for high contrast",
+        "Outline style for modern look",
+        "ARIA-hidden with text labels for accessibility"
+      ],
+      "iconMapping": {
+        "Dashboard": "Grid of 4 squares (dashboard icon)",
+        "Inventario": "3D box/cube",
+        "Categorías": "Folder or tag icon",
+        "Alertas": "Triangle with exclamation mark",
+        "Reportes": "Bar chart or document with graph",
+        "Configuración": "Gear/cog icon"
+      }
+    },
+    {
+      "id": "REQ-NAV-108",
+      "title": "Responsive Navigation (Mobile/Tablet)",
+      "priority": "High",
+      "userImpact": "High",
+      "description": "Overlay/drawer navigation for mobile devices with hamburger menu and touch gestures",
+      "keyFeatures": [
+        "Hamburger menu icon on screens < 768px",
+        "Sidebar slides in as overlay from left",
+        "Semi-transparent backdrop",
+        "Touch targets minimum 44x44px",
+        "Swipe gestures for open/close"
+      ],
+      "breakpoints": {
+        "mobile": "< 768px (overlay)",
+        "tablet": "768px - 1024px (collapsed by default)",
+        "desktop": ">= 1024px (expanded by default)"
+      }
+    },
+    {
+      "id": "REQ-NAV-109",
+      "title": "Keyboard Shortcuts",
+      "priority": "Medium",
+      "userImpact": "Medium",
+      "description": "Keyboard shortcuts for instant navigation to primary modules",
+      "keyFeatures": [
+        "Alt+D/Cmd+D for Dashboard",
+        "Alt+I/Cmd+I for Inventario",
+        "Alt+C/Cmd+C for Categorías",
+        "Alt+A/Cmd+A for Alertas",
+        "Alt+R/Cmd+R for Reportes",
+        "Alt+S/Cmd+S for Configuración",
+        "Alt+/ for shortcut help modal"
+      ],
+      "behavior": {
+        "globalScope": "Works from any page within PMM",
+        "textFieldException": "Shortcuts ignored when focus is in text input",
+        "documentation": "Displayed in tooltips and Help section"
+      }
+    },
+    {
+      "id": "REQ-NAV-110",
+      "title": "Navigation Performance & Loading States",
+      "priority": "High",
+      "userImpact": "High",
+      "description": "Instant visual feedback with progressive loading indicators for slower navigation",
+      "keyFeatures": [
+        "Immediate active state change (< 100ms)",
+        "Loading spinner after 500ms",
+        "Progress messages for loads > 3 seconds",
+        "Navigation remains interactive during loads",
+        "Error states with retry option"
+      ],
+      "performanceTargets": {
+        "interactionFeedback": "< 100ms",
+        "pageNavigation": "< 1 second (80th percentile)",
+        "moduleLoadWithData": "< 2 seconds",
+        "largeReports": "< 5 seconds"
+      }
+    }
+  ],
+
+  "nonFunctionalRequirements": [
+    {
+      "id": "NFR-NAV-201",
+      "category": "Performance",
+      "description": "All navigation interactions must feel instant and responsive",
+      "targets": {
+        "activeStateChange": "< 100ms from click",
+        "sidebarAnimation": "250-300ms total duration",
+        "navigationToNewModule": "< 3 seconds (80th percentile)",
+        "notificationBadgeUpdate": "< 10 seconds from server event",
+        "keyboardShortcutResponse": "< 100ms"
+      }
+    },
+    {
+      "id": "NFR-NAV-202",
+      "category": "Accessibility",
+      "description": "Navigation system must be fully accessible to users with disabilities (WCAG 2.1 AA compliance)",
+      "requirements": [
+        "Keyboard navigation: 100% of functions accessible via keyboard",
+        "Screen reader: All elements properly labeled with ARIA attributes",
+        "Color contrast: Minimum 4.5:1 for text, 3:1 for icons",
+        "Touch targets: Minimum 44x44px on mobile devices",
+        "Focus indicators: Clear visual focus state for keyboard users"
+      ]
+    },
+    {
+      "id": "NFR-NAV-203",
+      "category": "Browser Compatibility",
+      "description": "Navigation system must work consistently across all supported browsers",
+      "supportedBrowsers": [
+        "Chrome 100+",
+        "Firefox 100+",
+        "Safari 15+",
+        "Edge 100+"
+      ]
+    },
+    {
+      "id": "NFR-NAV-204",
+      "category": "Mobile Performance",
+      "description": "Navigation must be responsive and performant on mobile devices",
+      "targets": {
+        "sidebarOverlayAnimation": "< 300ms",
+        "touchGestureResponse": "< 100ms",
+        "mobilePageLoad": "< 3 seconds on 3G connection"
+      }
+    },
+    {
+      "id": "NFR-NAV-205",
+      "category": "Scalability",
+      "description": "Navigation structure must support additional modules without redesign",
+      "scalabilityTargets": {
+        "maxPrimaryItems": "Up to 12 navigation items",
+        "subNavigation": "Support nested menus for complex modules",
+        "roleBasedVisibility": "Show/hide modules per user role"
+      }
+    },
+    {
+      "id": "NFR-NAV-206",
+      "category": "Data Security & Privacy",
+      "description": "Navigation system must protect user data and respect privacy",
+      "requirements": [
+        "No sensitive data in localStorage (only UI preferences)",
+        "User profile data transmitted over HTTPS only",
+        "Session tokens not exposed in browser console or network logs",
+        "Notification badge does not reveal sensitive alert details"
+      ]
+    },
+    {
+      "id": "NFR-NAV-207",
+      "category": "Internationalization",
+      "description": "Navigation labels must support multiple languages",
+      "supportedLanguages": [
+        "Spanish (primary)",
+        "English (secondary)"
+      ],
+      "futureLanguages": [
+        "Portuguese (Brazil)",
+        "French"
+      ]
+    }
+  ],
+
+  "dependencies": {
+    "technical": [
+      "Next.js 16 (App Router for SSR navigation state)",
+      "React 19 for component architecture",
+      "Tailwind CSS 4 for styling and responsive breakpoints",
+      "Icon library (Heroicons, Lucide, or Phosphor)",
+      "WebSocket or polling for real-time notifications",
+      "LocalStorage for state persistence",
+      "Authentication system (JWT or session cookies)"
+    ],
+    "pmmModules": [
+      "Dashboard Module (default landing page)",
+      "Inventario Module",
+      "Categorías Module",
+      "Alertas Module (notification source)",
+      "Reportes Module",
+      "Configuración Module"
+    ],
+    "externalSystems": [
+      "User Profile API",
+      "Notification/Alert API",
+      "Session Management API"
+    ]
+  },
+
+  "rolloutStrategy": {
+    "phases": [
+      {
+        "phase": "Phase 1: Internal Testing",
+        "duration": "Week 1-2",
+        "activities": [
+          "Deploy to staging environment",
+          "Internal UAT with 5-10 power users",
+          "Focus on keyboard navigation, accessibility, and performance",
+          "Collect feedback on navigation flow and usability"
+        ]
+      },
+      {
+        "phase": "Phase 2: Pilot Rollout",
+        "duration": "Week 3-4",
+        "activities": [
+          "Deploy to 20% of production users (selected sites)",
+          "Monitor navigation analytics",
+          "Collect user feedback via in-app survey",
+          "Iterate on any critical issues"
+        ]
+      },
+      {
+        "phase": "Phase 3: Full Rollout",
+        "duration": "Week 5-6",
+        "activities": [
+          "Deploy to 100% of production users",
+          "Monitor performance and support tickets",
+          "Provide training materials",
+          "Announce new navigation features"
+        ]
+      }
+    ],
+    "successCriteria": {
+      "goNoGoCriteria": [
+        "Navigation error rate < 5%",
+        "User satisfaction rating >= 4.0/5.0",
+        "Navigation-related support tickets < 10 per week (for 100-user pilot)",
+        "No critical accessibility issues reported",
+        "Average navigation time < 3 seconds (80th percentile)"
+      ]
+    }
+  },
+
+  "futureEnhancements": [
+    {
+      "feature": "Role-Based Navigation",
+      "version": "v2.0",
+      "description": "Show/hide modules based on user permissions with custom navigation for different user roles"
+    },
+    {
+      "feature": "Notification Panel",
+      "version": "v1.1",
+      "description": "Dropdown panel showing recent alerts with quick actions (acknowledge, dismiss, view details)"
+    },
+    {
+      "feature": "Favorites/Pinned Pages",
+      "version": "v2.0",
+      "description": "Users can pin frequently accessed sub-pages to navigation for quick access"
+    },
+    {
+      "feature": "Navigation Search",
+      "version": "v2.0",
+      "description": "Global search within navigation (find module or page by name) with Ctrl+K/Cmd+K shortcut"
+    },
+    {
+      "feature": "Dark Mode",
+      "version": "v3.0",
+      "description": "Dark theme for navigation and entire application with user preference stored in settings"
+    },
+    {
+      "feature": "Sub-Navigation/Mega Menus",
+      "version": "v2.0",
+      "description": "Expandable sub-menus for complex modules (e.g., Reportes → Production Reports, Inventory Reports)"
+    }
+  ],
+
+  "visualDesignSpec": {
+    "colorPalette": {
+      "primaryOrange": "#F97316",
+      "darkBlue": "#1E3A5F",
+      "white": "#FFFFFF",
+      "lightGray": "#F3F4F6",
+      "darkGray": "#1F2937",
+      "red": "#EF4444"
+    },
+    "sidebar": {
+      "backgroundColor": "#1E3A5F",
+      "expandedWidth": "240px",
+      "collapsedWidth": "64px",
+      "activeItemBackground": "#F97316",
+      "activeItemText": "#FFFFFF",
+      "inactiveItemText": "#FFFFFF"
+    },
+    "topBar": {
+      "backgroundColor": "#FFFFFF",
+      "height": "60px",
+      "titleColor": "#1F2937"
+    },
+    "typography": {
+      "fontFamily": "Sans-serif (Inter, Roboto, or similar)",
+      "navigationItemSize": "14-16px",
+      "pageTitleSize": "24-28px",
+      "subtitleSize": "14-16px"
+    }
+  }
+}

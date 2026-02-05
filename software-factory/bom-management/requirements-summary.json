@@ -1,0 +1,154 @@
+{
+  "feature_name": "Bill of Materials (BOM) Management",
+  "feature_category": "Production Planning & Control",
+  "priority": "Critical",
+  "business_value": {
+    "primary_benefits": [
+      "Accurate production recipes eliminate material waste",
+      "Automated cost rollup from components to finished goods",
+      "Complete traceability from raw materials to finished products",
+      "Structured engineering change management with versioning"
+    ],
+    "operational_impact": [
+      "Material waste reduction > 20%",
+      "Production delays due to missing components reduced 50%",
+      "Cost estimation accuracy improvement > 30%"
+    ]
+  },
+  "target_users": [
+    {
+      "role": "Manufacturing Engineer",
+      "responsibilities": [
+        "Define and maintain BOMs",
+        "Manage BOM versions",
+        "Ensure technical accuracy"
+      ],
+      "impact": "High"
+    },
+    {
+      "role": "Production Planner",
+      "responsibilities": [
+        "Explode BOMs for material requirements",
+        "Plan component procurement",
+        "Schedule production"
+      ],
+      "impact": "High"
+    },
+    {
+      "role": "Cost Accountant",
+      "responsibilities": [
+        "Trigger cost rollup calculations",
+        "Analyze cost breakdowns",
+        "Support pricing decisions"
+      ],
+      "impact": "High"
+    }
+  ],
+  "success_metrics": {
+    "accuracy": {
+      "bom_accuracy": "> 98%",
+      "cost_calculation_accuracy": "> 99%",
+      "material_consumption_variance": "< 2%"
+    },
+    "efficiency": {
+      "bom_creation_time": "< 15 minutes",
+      "bom_explosion_time": "< 5 seconds",
+      "material_requirement_calculation": "< 10 seconds"
+    },
+    "operational_impact": {
+      "material_waste_reduction": "> 20%",
+      "component_shortage_delays": "-50%",
+      "cost_estimation_accuracy_improvement": "> 30%"
+    },
+    "adoption": {
+      "bom_completeness": "> 95%",
+      "user_satisfaction": "> 4.0/5.0",
+      "engineering_change_cycle_time_reduction": "> 40%"
+    }
+  },
+  "key_business_rules": [
+    "Parent item must be classified as Manufactured or Both",
+    "Circular BOM references prohibited at all levels",
+    "Historical BOM versions are read-only and cannot be deleted",
+    "BOMs referenced by production orders cannot be deleted",
+    "Each BOM version has unique number and effective date",
+    "Component quantities must be positive numbers",
+    "Scrap/waste factors increase material requirements proportionally",
+    "Cost rollup calculated recursively for multi-level structures",
+    "Production orders lock to specific BOM version at creation",
+    "Site-specific BOMs cannot be used in different sites"
+  ],
+  "functional_requirements_summary": [
+    {
+      "id": "REQ-BOM-001",
+      "title": "BOM Creation and Structure Definition",
+      "priority": "Critical"
+    },
+    {
+      "id": "REQ-BOM-002",
+      "title": "BOM Versioning and Change Management",
+      "priority": "Critical"
+    },
+    {
+      "id": "REQ-BOM-003",
+      "title": "BOM Deletion Protection",
+      "priority": "Critical"
+    },
+    {
+      "id": "REQ-BOM-004",
+      "title": "BOM Cost Rollup Calculation",
+      "priority": "High"
+    },
+    {
+      "id": "REQ-BOM-005",
+      "title": "BOM Explosion and Material Requirements",
+      "priority": "High"
+    },
+    {
+      "id": "REQ-BOM-006",
+      "title": "Multi-Site BOM Management",
+      "priority": "High"
+    },
+    {
+      "id": "REQ-BOM-007",
+      "title": "Where-Used Analysis",
+      "priority": "High"
+    },
+    {
+      "id": "REQ-BOM-008",
+      "title": "BOM Copy Function",
+      "priority": "Medium"
+    },
+    {
+      "id": "REQ-BOM-009",
+      "title": "Component Scrap/Waste Factor Management",
+      "priority": "Medium"
+    }
+  ],
+  "dependencies": {
+    "depends_on": [
+      "Items (parent and component items)",
+      "Sites (BOM location assignment)",
+      "Cost Lists (cost rollup calculations)",
+      "Units of Measure (quantity calculations)"
+    ],
+    "referenced_by": [
+      "Production Orders (BOM version specification)",
+      "Cost Calculations (cost rollup)",
+      "Material Requirements (explosion)",
+      "Inventory Transactions (component consumption tracking)"
+    ]
+  },
+  "performance_targets": {
+    "bom_list_load": "< 2 seconds",
+    "bom_detail_load": "< 1 second",
+    "bom_save": "< 3 seconds",
+    "bom_explosion": "< 5 seconds for 10+ levels",
+    "cost_rollup": "< 5 seconds for complex BOMs",
+    "where_used_query": "< 3 seconds",
+    "supported_bom_count": "50,000+",
+    "max_components_per_bom": "1,000+",
+    "max_bom_levels": "20+",
+    "concurrent_users": "100+"
+  }
+}
