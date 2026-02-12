@@ -1,7 +1,6 @@
 ---
 allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git push:*)
 description: "Generate semantic commit messages by analyzing changes, staging updates, and creating conventional commits automatically"
-model: claude-3-5-haiku-20241022
 ---
 
 # Semantic Commit Generator
